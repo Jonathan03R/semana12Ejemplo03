@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       home: Scaffold(
-        appBar: AppBar(title: const Text('Flutter Demo Home Page')),
+        appBar: AppBar(title: const Text('Roque Jonathan - Charts ')),
         body: Center(
           child: Container(
             decoration: BoxDecoration(
@@ -38,10 +38,7 @@ class MyApp extends StatelessWidget {
                 children: <Widget>[
                   SfCartesianChart(
                     title: ChartTitle(text: 'Progreso 01'),
-                    legend: Legend(
-                      isVisible: true,
-                      position: LegendPosition.bottom,
-                    ),
+                    legend: Legend(isVisible: true),
                     // Initialize category axis
                     primaryXAxis: CategoryAxis(),
 
@@ -62,8 +59,11 @@ class MyApp extends StatelessWidget {
                     ],
                   ),
                   SfCircularChart(
-                    title: ChartTitle(text: 'Sales by sales person'),
-                    legend: Legend(isVisible: true),
+                    title: ChartTitle(text: 'Grafico Circular'),
+                    legend: Legend(
+                      isVisible: true,
+                      position: LegendPosition.left,
+                    ),
                     series: <PieSeries<_PieData, String>>[
                       PieSeries<_PieData, String>(
                         explode: true,
@@ -93,8 +93,8 @@ class SalesData {
 }
 
 class _PieData {
- _PieData(this.xData, this.yData, [this.text]);
- final String xData;
- final num yData;
- String? text;
+  _PieData(this.xData, this.yData, [this.text]);
+  final String xData;
+  final num yData;
+  String? text;
 }
