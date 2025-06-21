@@ -18,11 +18,19 @@ class MyApp extends StatelessWidget {
       _PieData('Emma', 32, 'Emma'),
       _PieData('Mike', 40, 'Mike'),
     ];
+
+    final List<ChartData> chartData = [
+      ChartData('David', 25),
+      ChartData('Steve', 38),
+      ChartData('Jack', 34),
+      ChartData('Others', 52),
+    ];
     return MaterialApp(
       title: 'Flutter Demo',
       home: Scaffold(
         appBar: AppBar(title: const Text('Roque Jonathan - Charts ')),
-        body: Center(
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(18.0),
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -31,7 +39,6 @@ class MyApp extends StatelessWidget {
             ),
             padding: const EdgeInsets.all(18.0),
             width: double.infinity,
-            height: double.infinity,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -58,6 +65,7 @@ class MyApp extends StatelessWidget {
                       ),
                     ],
                   ),
+
                   SfCircularChart(
                     title: ChartTitle(text: 'Grafico Circular'),
                     legend: Legend(
@@ -75,6 +83,66 @@ class MyApp extends StatelessWidget {
                         dataLabelSettings: DataLabelSettings(isVisible: true),
                       ),
                     ],
+                  ),
+
+                  SfCartesianChart(
+                    title: ChartTitle(text: 'Progreso 01'),
+                    legend: Legend(isVisible: true),
+                    // Initialize category axis
+                    primaryXAxis: CategoryAxis(),
+
+                    series: <ColumnSeries<SalesData, String>>[
+                      ColumnSeries<SalesData, String>(
+                        // Bind data source
+                        dataSource: <SalesData>[
+                          SalesData('Jan', 35),
+                          SalesData('Feb', 28),
+                          SalesData('Mar', 34),
+                          SalesData('Apr', 32),
+                          SalesData('May', 40),
+                        ],
+                        xValueMapper: (SalesData sales, _) => sales.year,
+                        yValueMapper: (SalesData sales, _) => sales.sales,
+                        dataLabelSettings: DataLabelSettings(isVisible: true),
+                      ),
+                    ],
+                  ),
+
+                  SfCartesianChart(
+                    title: ChartTitle(text: 'Progreso 01'),
+                    legend: Legend(isVisible: true),
+                    // Initialize category axis
+                    primaryXAxis: CategoryAxis(),
+
+                    series: <BubbleSeries<SalesData, String>>[
+                      BubbleSeries<SalesData, String>(
+                        // Bind data source
+                        dataSource: <SalesData>[
+                          SalesData('Jan', 35),
+                          SalesData('Feb', 28),
+                          SalesData('Mar', 34),
+                          SalesData('Apr', 32),
+                          SalesData('May', 40),
+                        ],
+                        xValueMapper: (SalesData sales, _) => sales.year,
+                        yValueMapper: (SalesData sales, _) => sales.sales,
+                        dataLabelSettings: DataLabelSettings(isVisible: true),
+                      ),
+                    ],
+                  ),
+
+                  SfPyramidChart(
+                    legend: Legend(isVisible: true),
+                    title: ChartTitle(text: 'Piramide Chart Example'),
+                    series: PyramidSeries<ChartData, String>(
+                      dataSource: chartData,
+                      xValueMapper: (ChartData data, _) => data.x,
+                      yValueMapper: (ChartData data, _) => data.y,
+                      dataLabelSettings: DataLabelSettings(
+                        isVisible: true,
+                        labelPosition: ChartDataLabelPosition.outside,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -97,4 +165,11 @@ class _PieData {
   final String xData;
   final num yData;
   String? text;
+}
+
+class ChartData {
+  ChartData(this.x, this.y, [this.color]);
+  final String x;
+  final double y;
+  final Color? color;
 }
